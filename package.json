@@ -1,0 +1,16 @@
+{
+  "name": "ps4-ui",
+  "version": "1.0.0",
+  "description": "PlayStation 4 User Interface recreation",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000"
+  },
+  "keywords": ["ps4", "ui", "interface", "gaming"],
+  "author": "Davi",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
