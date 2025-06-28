@@ -108,6 +108,37 @@ if (shutdown2) {
     });
     });
 }
+
+// Settings navigation
+const settingsElement = document.querySelector('.settings');
+if (settingsElement) {
+    settingsElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        // Add transition effect
+        document.body.style.transition = 'opacity 0.3s ease';
+        document.body.style.opacity = '0';
+        
+        setTimeout(() => {
+            window.location.href = 'settings.html';
+        }, 300);
+    });
+}
+
+// Check if we're clicking on settings game tile
+document.addEventListener('click', function(e) {
+    const settingsTile = e.target.closest('.squareGame');
+    if (settingsTile && settingsTile.querySelector('.settings')) {
+        e.preventDefault();
+        // Add transition effect
+        document.body.style.transition = 'opacity 0.3s ease';
+        document.body.style.opacity = '0';
+        
+        setTimeout(() => {
+            window.location.href = 'settings.html';
+        }, 300);
+    }
+});
+
 //Navigate on page
 function jump_last(index) {
     current = index % focusable.length;
@@ -176,6 +207,20 @@ function downItem() {
 
 function clickItem(index) {
     if (focusable[index]) {
+        // Check if it's the settings tile
+        const element = focusable[index];
+        const settingsTile = element.closest('.squareGame');
+        if (settingsTile && settingsTile.querySelector('.settings')) {
+            // Add transition effect
+            document.body.style.transition = 'opacity 0.3s ease';
+            document.body.style.opacity = '0';
+            
+            setTimeout(() => {
+                window.location.href = 'settings.html';
+            }, 300);
+            return;
+        }
+        
         focusable[index].click();
     }
 }
