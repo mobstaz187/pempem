@@ -7,25 +7,43 @@
   https://codepen.io/Pixmy/pen/qaYQoV
 */
 $(document).ready(function(){
-		$(".gameText").hide();
-		$('.gameTitle').hide();
-		$('#store').hide();
-		timeout();
+    // Check if we should skip startup screen (coming from settings)
+    const skipStartup = sessionStorage.getItem('skipStartup');
+    
+    if (skipStartup) {
+        // Clear the flag and go directly to main interface
+        sessionStorage.removeItem('skipStartup');
+        
+        // Hide startup elements and show main interface immediately
+        document.getElementById("imagem").style.display = "none";
+        document.getElementById("mensagem").style.display = "none";
+        document.getElementById("restoDaPagina").style.display = "block";
+        
+        // Set the flag that startup is complete
+        botaoPsClicado = true;
+        tempoAcabou = true;
+    } else {
+        // Normal startup sequence
+        $(".gameText").hide();
+        $('.gameTitle').hide();
+        $('#store').hide();
+        timeout();
+    }
 
-		// Variables for current position
-		var x, y;
+    // Variables for current position
+    var x, y;
 
-		function handleMouse(e) {
-		  // Verify that x and y already have some value
-		  if (x && y) {
-		    // Scroll window by difference between current and previous positions
-		    window.scrollBy(e.clientX - x, e.clientY - y);
-		  }
+    function handleMouse(e) {
+      // Verify that x and y already have some value
+      if (x && y) {
+        // Scroll window by difference between current and previous positions
+        window.scrollBy(e.clientX - x, e.clientY - y);
+      }
 
-		  // Store current position
-		  x = e.clientX;
-		  y = e.clientY;
-		}
+      // Store current position
+      x = e.clientX;
+      y = e.clientY;
+    }
 
     //Clock
 function currentTime() {

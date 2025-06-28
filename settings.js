@@ -403,7 +403,7 @@ function playPS4Sound(type) {
     }
 }
 
-// Go back to main PS4 interface with authentic transition
+// FIXED: Go back to main PS4 interface without startup screen
 function goBackToMain() {
     playPS4Sound('back');
     
@@ -415,6 +415,8 @@ function goBackToMain() {
     });
     
     setTimeout(() => {
+        // Set a flag to skip startup screen
+        sessionStorage.setItem('skipStartup', 'true');
         window.location.href = 'index.html';
     }, 400);
 }
