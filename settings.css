@@ -1,4 +1,4 @@
-/* Authentic PS4 Settings Styles */
+/* Authentic PS4 Settings Styles with Real Animations */
 .ps4-settings {
     background: linear-gradient(135deg, #003d82 0%, #0066cc 100%);
     min-height: 100vh;
@@ -6,6 +6,18 @@
     color: white;
     overflow: hidden;
     position: relative;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* Top Bar */
@@ -17,6 +29,18 @@
     align-items: center;
     padding: 0 30px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-60px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .top-bar-left {
@@ -29,12 +53,23 @@
     width: 40px;
     height: 40px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 30h60v40H20z'/%3E%3C/svg%3E") center/contain no-repeat;
+    animation: logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+    from {
+        filter: brightness(1);
+    }
+    to {
+        filter: brightness(1.2);
+    }
 }
 
 .system-name {
     font-size: 18px;
     font-weight: 300;
     color: #ffffff;
+    font-family: 'ps4', sans-serif;
 }
 
 .top-bar-right {
@@ -47,6 +82,18 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    animation: slideInRight 0.7s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .user-avatar {
@@ -54,23 +101,53 @@
     height: 35px;
     background: url("./assets/img/user.png") center/cover;
     border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.1);
 }
 
 .username {
     font-size: 16px;
     color: #ffffff;
+    font-family: 'ps4', sans-serif;
+    font-weight: 300;
 }
 
 .time-display {
     font-size: 16px;
     color: #ffffff;
     font-weight: 300;
+    font-family: 'ps4', sans-serif;
+    animation: digitalClock 1s ease-in-out;
+}
+
+@keyframes digitalClock {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
 }
 
 /* Main Settings Area */
 .settings-main-area {
     display: flex;
     height: calc(100vh - 120px);
+    animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Left Navigation */
@@ -79,6 +156,18 @@
     background: rgba(0, 0, 0, 0.3);
     padding: 20px 0;
     overflow-y: auto;
+    animation: slideInLeft 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-280px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .nav-item {
@@ -87,20 +176,54 @@
     gap: 15px;
     padding: 15px 25px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-left: 4px solid transparent;
     font-size: 16px;
+    font-family: 'ps4', sans-serif;
+    font-weight: 300;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.nav-item:hover::before,
+.nav-item:focus::before {
+    left: 100%;
 }
 
 .nav-item:hover,
 .nav-item:focus {
     background: rgba(255, 255, 255, 0.1);
     outline: none;
+    transform: translateX(10px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
 }
 
 .nav-item.active {
     background: rgba(255, 255, 255, 0.15);
     border-left-color: #00d4ff;
+    transform: translateX(15px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+    animation: activeGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes activeGlow {
+    from {
+        box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+    }
+    to {
+        box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+    }
 }
 
 .nav-icon {
@@ -110,6 +233,15 @@
     background-repeat: no-repeat;
     background-position: center;
     opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover .nav-icon,
+.nav-item:focus .nav-icon,
+.nav-item.active .nav-icon {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: brightness(1.2);
 }
 
 /* Navigation Icons */
@@ -150,11 +282,35 @@
     flex: 1;
     background: rgba(0, 0, 0, 0.2);
     overflow-y: auto;
+    animation: slideInRight 0.8s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .settings-panel {
     display: none;
     padding: 30px 40px;
+    animation: panelFadeIn 0.4s ease-out;
+}
+
+@keyframes panelFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .settings-panel.active {
@@ -166,6 +322,19 @@
     margin: 0 0 30px 0;
     font-weight: 300;
     color: #ffffff;
+    font-family: 'ps4', sans-serif;
+    animation: titleSlide 0.6s ease-out;
+}
+
+@keyframes titleSlide {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .settings-list {
@@ -181,8 +350,47 @@
     padding: 18px 25px;
     background: rgba(255, 255, 255, 0.05);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-left: 4px solid transparent;
+    position: relative;
+    overflow: hidden;
+    animation: optionSlideIn 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+@keyframes optionSlideIn {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.setting-option:nth-child(1) { animation-delay: 0.1s; }
+.setting-option:nth-child(2) { animation-delay: 0.2s; }
+.setting-option:nth-child(3) { animation-delay: 0.3s; }
+.setting-option:nth-child(4) { animation-delay: 0.4s; }
+.setting-option:nth-child(5) { animation-delay: 0.5s; }
+.setting-option:nth-child(6) { animation-delay: 0.6s; }
+.setting-option:nth-child(7) { animation-delay: 0.7s; }
+
+.setting-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.setting-option:hover::before,
+.setting-option:focus::before {
+    left: 100%;
 }
 
 .setting-option:hover,
@@ -190,18 +398,41 @@
     background: rgba(255, 255, 255, 0.1);
     border-left-color: #00d4ff;
     outline: none;
+    transform: translateX(10px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.setting-option:active {
+    transform: translateX(15px) scale(0.98);
+    background: rgba(0, 212, 255, 0.2);
 }
 
 .setting-name {
     font-size: 16px;
     font-weight: 300;
     color: #ffffff;
+    font-family: 'ps4', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.setting-option:hover .setting-name,
+.setting-option:focus .setting-name {
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
 .setting-arrow {
     font-size: 16px;
     color: rgba(255, 255, 255, 0.6);
     font-weight: 300;
+    transition: all 0.3s ease;
+    font-family: 'ps4', sans-serif;
+}
+
+.setting-option:hover .setting-arrow,
+.setting-option:focus .setting-arrow {
+    color: #00d4ff;
+    transform: translateX(5px);
 }
 
 /* Bottom Bar */
@@ -212,6 +443,7 @@
     align-items: center;
     padding: 0 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideUp 0.7s ease-out;
 }
 
 .control-hints {
@@ -225,6 +457,14 @@
     gap: 8px;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.8);
+    font-family: 'ps4', sans-serif;
+    font-weight: 300;
+    transition: all 0.3s ease;
+}
+
+.hint:hover {
+    color: #00d4ff;
+    transform: scale(1.05);
 }
 
 .button-icon {
@@ -233,6 +473,12 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    transition: all 0.3s ease;
+}
+
+.hint:hover .button-icon {
+    filter: brightness(1.5);
+    transform: scale(1.1);
 }
 
 .x-button {
@@ -251,6 +497,16 @@
 div:focus {
     outline: 2px solid #00d4ff;
     outline-offset: 2px;
+    animation: focusPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes focusPulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    }
 }
 
 /* Scrollbar */
@@ -268,6 +524,62 @@ div:focus {
 .settings-content-area::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 3px;
+    transition: background 0.3s ease;
+}
+
+.settings-nav::-webkit-scrollbar-thumb:hover,
+.settings-content-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 212, 255, 0.6);
+}
+
+/* Loading Animation */
+@keyframes ps4Loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #00d4ff;
+    border-radius: 50%;
+    animation: ps4Loading 1s linear infinite;
+}
+
+/* Panel Transition Effects */
+.panel-transition-enter {
+    animation: panelSlideIn 0.4s ease-out;
+}
+
+.panel-transition-exit {
+    animation: panelSlideOut 0.3s ease-in;
+}
+
+@keyframes panelSlideIn {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes panelSlideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
 }
 
 /* Responsive */
@@ -283,6 +595,18 @@ div:focus {
         overflow-x: auto;
         overflow-y: hidden;
         padding: 10px 0;
+        animation: slideInTop 0.6s ease-out;
+    }
+    
+    @keyframes slideInTop {
+        from {
+            transform: translateY(-200px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
     
     .nav-item {
@@ -299,6 +623,7 @@ div:focus {
     .nav-item:focus {
         border-left: none;
         border-bottom-color: #00d4ff;
+        transform: translateY(-5px);
     }
     
     .settings-content-area {
@@ -313,4 +638,46 @@ div:focus {
         font-size: 24px;
         margin-bottom: 20px;
     }
+}
+
+/* Additional PS4-style effects */
+.ps4-glow {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.ps4-pulse {
+    animation: ps4Pulse 2s ease-in-out infinite;
+}
+
+@keyframes ps4Pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Authentic PS4 ripple effect */
+.ripple-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple-effect::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 212, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ripple-effect:active::after {
+    width: 300px;
+    height: 300px;
 }
