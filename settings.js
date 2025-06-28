@@ -1,4 +1,4 @@
-// Settings Page JavaScript
+// Authentic PS4 Settings JavaScript
 $(document).ready(function() {
     // Clock functionality
     function currentTime() {
@@ -12,33 +12,53 @@ $(document).ready(function() {
         let time = hh + ":" + mm;
 
         document.getElementById("clock").innerText = time; 
-        let t = setTimeout(function(){ currentTime() }, 1000);
+        setTimeout(currentTime, 1000);
     }
     
     currentTime();
 
-    // Category navigation
-    $('.settings-category').click(function() {
-        const category = $(this).data('category');
+    // Navigation functionality
+    $('.nav-item').click(function() {
+        const panel = $(this).data('panel');
         
-        // Update active category
-        $('.settings-category').removeClass('active');
+        // Update active navigation
+        $('.nav-item').removeClass('active');
         $(this).addClass('active');
         
         // Update active panel
-        $('.content-panel').removeClass('active');
-        $('#' + category + '-panel').addClass('active');
+        $('.settings-panel').removeClass('active');
+        $('#' + panel + '-panel').addClass('active');
     });
 
-    // Keyboard navigation
+    // Setting option clicks
+    $('.setting-option').click(function() {
+        const settingName = $(this).find('.setting-name').text();
+        
+        // Add click animation
+        $(this).css('transform', 'translateX(5px)');
+        setTimeout(() => {
+            $(this).css('transform', '');
+        }, 150);
+
+        // Simulate PS4 behavior - would normally navigate to sub-menu
+        console.log('Opening setting:', settingName);
+        
+        // For demo purposes, show PS4-style notification
+        setTimeout(() => {
+            showPS4Notification('Setting', settingName + ' selected');
+        }, 200);
+    });
+
+    // Keyboard and gamepad navigation
     let currentFocus = 0;
     const focusableElements = $('[tabindex="0"]');
 
     function updateFocus() {
-        focusableElements.removeClass('keyboard-focus');
-        $(focusableElements[currentFocus]).addClass('keyboard-focus').focus();
+        focusableElements.blur();
+        $(focusableElements[currentFocus]).focus();
     }
 
+    // Keyboard controls
     $(document).keydown(function(e) {
         switch(e.which) {
             case 38: // Up arrow
@@ -51,25 +71,43 @@ $(document).ready(function() {
                 currentFocus = Math.min(focusableElements.length - 1, currentFocus + 1);
                 updateFocus();
                 break;
-            case 13: // Enter
+            case 37: // Left arrow
+                e.preventDefault();
+                // Navigate to previous category if in nav
+                if ($(focusableElements[currentFocus]).hasClass('nav-item')) {
+                    currentFocus = Math.max(0, currentFocus - 1);
+                    updateFocus();
+                }
+                break;
+            case 39: // Right arrow
+                e.preventDefault();
+                // Navigate to next category if in nav
+                if ($(focusableElements[currentFocus]).hasClass('nav-item')) {
+                    currentFocus = Math.min(focusableElements.length - 1, currentFocus + 1);
+                    updateFocus();
+                }
+                break;
+            case 13: // Enter (X button)
                 e.preventDefault();
                 $(focusableElements[currentFocus]).click();
                 break;
-            case 27: // Escape
+            case 27: // Escape (Circle button)
                 e.preventDefault();
-                goBack();
+                goBackToMain();
                 break;
         }
     });
 
     // Gamepad support
     let gamepadIndex = null;
+    let lastButtonState = {};
 
     function connectGamepad() {
         const gamepads = navigator.getGamepads();
         for (let i = 0; i < gamepads.length; i++) {
             if (gamepads[i]) {
                 gamepadIndex = i;
+                console.log('Gamepad connected:', gamepads[i].id);
                 break;
             }
         }
@@ -81,62 +119,92 @@ $(document).ready(function() {
         const gamepad = navigator.getGamepads()[gamepadIndex];
         if (!gamepad) return;
 
-        // D-pad or left stick navigation
-        if (gamepad.buttons[12].pressed || gamepad.axes[1] < -0.5) { // Up
+        // Check for button press (not held)
+        function isButtonPressed(buttonIndex) {
+            const pressed = gamepad.buttons[buttonIndex].pressed;
+            const wasPressed = lastButtonState[buttonIndex] || false;
+            lastButtonState[buttonIndex] = pressed;
+            return pressed && !wasPressed;
+        }
+
+        // D-pad navigation
+        if (isButtonPressed(12) || gamepad.axes[1] < -0.5) { // Up
             currentFocus = Math.max(0, currentFocus - 1);
             updateFocus();
-        } else if (gamepad.buttons[13].pressed || gamepad.axes[1] > 0.5) { // Down
+        } else if (isButtonPressed(13) || gamepad.axes[1] > 0.5) { // Down
             currentFocus = Math.min(focusableElements.length - 1, currentFocus + 1);
             updateFocus();
-        } else if (gamepad.buttons[14].pressed || gamepad.axes[0] < -0.5) { // Left
-            // Handle left navigation if needed
-        } else if (gamepad.buttons[15].pressed || gamepad.axes[0] > 0.5) { // Right
-            // Handle right navigation if needed
+        } else if (isButtonPressed(14) || gamepad.axes[0] < -0.5) { // Left
+            if ($(focusableElements[currentFocus]).hasClass('nav-item')) {
+                currentFocus = Math.max(0, currentFocus - 1);
+                updateFocus();
+            }
+        } else if (isButtonPressed(15) || gamepad.axes[0] > 0.5) { // Right
+            if ($(focusableElements[currentFocus]).hasClass('nav-item')) {
+                currentFocus = Math.min(focusableElements.length - 1, currentFocus + 1);
+                updateFocus();
+            }
         }
 
         // X button (confirm)
-        if (gamepad.buttons[0].pressed) {
+        if (isButtonPressed(0)) {
             $(focusableElements[currentFocus]).click();
         }
 
         // Circle button (back)
-        if (gamepad.buttons[1].pressed) {
-            goBack();
+        if (isButtonPressed(1)) {
+            goBackToMain();
+        }
+
+        // Options button
+        if (isButtonPressed(9)) {
+            showPS4Notification('Options', 'Options menu not available');
         }
     }
 
-    // Check for gamepad connection
+    // Initialize gamepad
     window.addEventListener('gamepadconnected', connectGamepad);
     connectGamepad();
 
     // Gamepad polling
     setInterval(handleGamepadInput, 100);
 
-    // Setting item interactions
-    $('.setting-item').click(function() {
-        // Add click animation
-        $(this).css('transform', 'translateX(15px) scale(0.98)');
-        setTimeout(() => {
-            $(this).css('transform', '');
-        }, 150);
-
-        // Here you could add specific functionality for each setting
-        const settingTitle = $(this).find('h3').text();
-        console.log('Clicked setting:', settingTitle);
-        
-        // For demo purposes, show an alert
-        // In a real implementation, you'd navigate to specific setting pages
-        setTimeout(() => {
-            alert('Opening: ' + settingTitle + '\n\nThis would normally open the specific setting page.');
-        }, 200);
-    });
+    // Set initial focus
+    updateFocus();
 });
 
+// PS4-style notification
+function showPS4Notification(title, message) {
+    const notification = $(`
+        <div class="ps4-notification">
+            <div class="notification-icon"></div>
+            <div class="notification-content">
+                <div class="notification-title">${title}</div>
+                <div class="notification-message">${message}</div>
+            </div>
+        </div>
+    `);
+
+    $('body').append(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.addClass('show');
+    }, 100);
+
+    // Animate out
+    setTimeout(() => {
+        notification.removeClass('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
 // Go back to main PS4 interface
-function goBack() {
-    // Add exit animation
-    $('.settings-container').css({
-        'transform': 'scale(0.9)',
+function goBackToMain() {
+    $('.ps4-settings').css({
+        'transform': 'scale(0.95)',
         'opacity': '0',
         'transition': 'all 0.3s ease'
     });
@@ -146,12 +214,54 @@ function goBack() {
     }, 300);
 }
 
-// Add some visual feedback for keyboard navigation
-const style = document.createElement('style');
-style.textContent = `
-    .keyboard-focus {
-        box-shadow: 0 0 0 3px #00d4ff !important;
-        transform: translateX(10px) !important;
-    }
+// Add PS4 notification styles
+const notificationStyles = `
+    <style>
+        .ps4-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 10000;
+            font-family: 'ps4', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .ps4-notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: #0066cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .notification-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .notification-message {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
 `;
-document.head.appendChild(style);
+
+$('head').append(notificationStyles);

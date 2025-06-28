@@ -11,274 +11,295 @@
     <script src="./assets/js/jquery.min.js"></script>
 </head>
 <body>
-    <div class="settings-container">
-        <!-- Header -->
-        <header class="settings-header">
-            <div class="header-left">
-                <div class="back-button" tabindex="0" onclick="goBack()">
-                    <span>←</span>
+    <div class="ps4-settings">
+        <!-- Top Bar -->
+        <div class="ps4-top-bar">
+            <div class="top-bar-left">
+                <div class="ps4-logo"></div>
+                <span class="system-name">PlayStation®4</span>
+            </div>
+            <div class="top-bar-right">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <span class="username">Player</span>
                 </div>
-                <h1>Settings</h1>
+                <div class="time-display" id="clock"></div>
             </div>
-            <div class="header-right">
-                <div id="clock" onload="currentTime()"></div>
-            </div>
-        </header>
+        </div>
 
-        <!-- Main Content -->
-        <div class="settings-main">
-            <!-- Sidebar -->
-            <div class="settings-sidebar">
-                <div class="settings-category active" tabindex="0" data-category="user">
-                    <div class="category-icon user-icon"></div>
+        <!-- Main Settings Area -->
+        <div class="settings-main-area">
+            <!-- Left Navigation -->
+            <div class="settings-nav">
+                <div class="nav-item active" tabindex="0" data-panel="user">
+                    <div class="nav-icon user-icon"></div>
                     <span>User</span>
                 </div>
-                <div class="settings-category" tabindex="0" data-category="system">
-                    <div class="category-icon system-icon"></div>
+                <div class="nav-item" tabindex="0" data-panel="system">
+                    <div class="nav-icon system-icon"></div>
                     <span>System</span>
                 </div>
-                <div class="settings-category" tabindex="0" data-category="devices">
-                    <div class="category-icon devices-icon"></div>
+                <div class="nav-item" tabindex="0" data-panel="devices">
+                    <div class="nav-icon devices-icon"></div>
                     <span>Devices</span>
                 </div>
-                <div class="settings-category" tabindex="0" data-category="network">
-                    <div class="category-icon network-icon"></div>
+                <div class="nav-item" tabindex="0" data-panel="network">
+                    <div class="nav-icon network-icon"></div>
                     <span>Network</span>
                 </div>
-                <div class="settings-category" tabindex="0" data-category="account">
-                    <div class="category-icon account-icon"></div>
+                <div class="nav-item" tabindex="0" data-panel="account">
+                    <div class="nav-icon account-icon"></div>
                     <span>Account Management</span>
                 </div>
-                <div class="settings-category" tabindex="0" data-category="parental">
-                    <div class="category-icon parental-icon"></div>
+                <div class="nav-item" tabindex="0" data-panel="parental">
+                    <div class="nav-icon parental-icon"></div>
                     <span>Parental Controls</span>
                 </div>
-                <div class="settings-category" tabindex="0" data-category="accessibility">
-                    <div class="category-icon accessibility-icon"></div>
+                <div class="nav-item" tabindex="0" data-panel="accessibility">
+                    <div class="nav-icon accessibility-icon"></div>
                     <span>Accessibility</span>
                 </div>
-                <div class="settings-category" tabindex="0" data-category="power">
-                    <div class="category-icon power-icon"></div>
+                <div class="nav-item" tabindex="0" data-panel="power">
+                    <div class="nav-icon power-icon"></div>
                     <span>Power Save Settings</span>
                 </div>
             </div>
 
-            <!-- Content Area -->
-            <div class="settings-content">
-                <!-- User Settings -->
-                <div class="content-panel active" id="user-panel">
-                    <h2>User</h2>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Login Settings</h3>
-                            <p>Manage user login and account settings</p>
-                        </div>
-                        <div class="setting-arrow">→</div>
+            <!-- Right Content Area -->
+            <div class="settings-content-area">
+                <!-- User Panel -->
+                <div class="settings-panel active" id="user-panel">
+                    <div class="panel-header">
+                        <h2>User</h2>
                     </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>User Profile</h3>
-                            <p>Edit profile information and avatar</p>
+                    <div class="settings-list">
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Login Settings</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Privacy Settings</h3>
-                            <p>Control who can see your information</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">User Profile</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Privacy Settings</span>
+                            <span class="setting-arrow">></span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- System Settings -->
-                <div class="content-panel" id="system-panel">
-                    <h2>System</h2>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Console Information</h3>
-                            <p>View system information and storage</p>
-                        </div>
-                        <div class="setting-arrow">→</div>
+                <!-- System Panel -->
+                <div class="settings-panel" id="system-panel">
+                    <div class="panel-header">
+                        <h2>System</h2>
                     </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Date and Time</h3>
-                            <p>Set date, time, and time zone</p>
+                    <div class="settings-list">
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Console Information</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Language</h3>
-                            <p>Change system language settings</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Date and Time</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Initialization</h3>
-                            <p>Reset and initialization options</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Language</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                </div>
-
-                <!-- Devices Settings -->
-                <div class="content-panel" id="devices-panel">
-                    <h2>Devices</h2>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Controllers</h3>
-                            <p>Manage DUALSHOCK 4 controllers</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Keyboard and User Dictionary</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Audio Devices</h3>
-                            <p>Configure headsets and speakers</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Automatic Downloads</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>External Storage</h3>
-                            <p>Manage USB storage devices</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">System Software Update</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Initialization</span>
+                            <span class="setting-arrow">></span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Network Settings -->
-                <div class="content-panel" id="network-panel">
-                    <h2>Network</h2>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Set Up Internet Connection</h3>
-                            <p>Configure Wi-Fi or LAN connection</p>
-                        </div>
-                        <div class="setting-arrow">→</div>
+                <!-- Devices Panel -->
+                <div class="settings-panel" id="devices-panel">
+                    <div class="panel-header">
+                        <h2>Devices</h2>
                     </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Test Internet Connection</h3>
-                            <p>Check your connection status</p>
+                    <div class="settings-list">
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Controllers</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>View Connection Status</h3>
-                            <p>See detailed connection information</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Audio Devices</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                </div>
-
-                <!-- Account Management -->
-                <div class="content-panel" id="account-panel">
-                    <h2>Account Management</h2>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Account Information</h3>
-                            <p>View and edit account details</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">External Storage</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>PlayStation Plus</h3>
-                            <p>Manage your PS Plus subscription</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Bluetooth Devices</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Wallet</h3>
-                            <p>Add funds and payment methods</p>
-                        </div>
-                        <div class="setting-arrow">→</div>
                     </div>
                 </div>
 
-                <!-- Parental Controls -->
-                <div class="content-panel" id="parental-panel">
-                    <h2>Parental Controls</h2>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Sub Account Management</h3>
-                            <p>Manage child accounts</p>
-                        </div>
-                        <div class="setting-arrow">→</div>
+                <!-- Network Panel -->
+                <div class="settings-panel" id="network-panel">
+                    <div class="panel-header">
+                        <h2>Network</h2>
                     </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Spending Limits</h3>
-                            <p>Set monthly spending limits</p>
+                    <div class="settings-list">
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Set Up Internet Connection</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Content Restrictions</h3>
-                            <p>Control access to games and content</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Test Internet Connection</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                </div>
-
-                <!-- Accessibility -->
-                <div class="content-panel" id="accessibility-panel">
-                    <h2>Accessibility</h2>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Button Assignments</h3>
-                            <p>Customize controller button mapping</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">View Connection Status</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Text Size</h3>
-                            <p>Adjust text size for better readability</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Set Up Remote Play</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>High Contrast</h3>
-                            <p>Enable high contrast display mode</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Media Server Connection</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
                     </div>
                 </div>
 
-                <!-- Power Save Settings -->
-                <div class="content-panel" id="power-panel">
-                    <h2>Power Save Settings</h2>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Set Time Until PS4 Turns Off</h3>
-                            <p>Configure auto power-off timer</p>
-                        </div>
-                        <div class="setting-arrow">→</div>
+                <!-- Account Management Panel -->
+                <div class="settings-panel" id="account-panel">
+                    <div class="panel-header">
+                        <h2>Account Management</h2>
                     </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Set Functions Available in Rest Mode</h3>
-                            <p>Choose what stays active in rest mode</p>
+                    <div class="settings-list">
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Account Information</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
-                    </div>
-                    <div class="setting-item" tabindex="0">
-                        <div class="setting-info">
-                            <h3>Supply Power to USB Ports</h3>
-                            <p>Control USB power in rest mode</p>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">PlayStation Plus</span>
+                            <span class="setting-arrow">></span>
                         </div>
-                        <div class="setting-arrow">→</div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Wallet</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Privacy Settings</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Sign Out</span>
+                            <span class="setting-arrow">></span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Parental Controls Panel -->
+                <div class="settings-panel" id="parental-panel">
+                    <div class="panel-header">
+                        <h2>Parental Controls</h2>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Sub Account Management</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Spending Limits</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Content Restrictions</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Time Management</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accessibility Panel -->
+                <div class="settings-panel" id="accessibility-panel">
+                    <div class="panel-header">
+                        <h2>Accessibility</h2>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Button Assignments</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Text Size</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">High Contrast</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Zoom</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Invert Colors</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Power Save Settings Panel -->
+                <div class="settings-panel" id="power-panel">
+                    <div class="panel-header">
+                        <h2>Power Save Settings</h2>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Set Time Until PS4 Turns Off</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Set Functions Available in Rest Mode</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                        <div class="setting-option" tabindex="0">
+                            <span class="setting-name">Supply Power to USB Ports</span>
+                            <span class="setting-arrow">></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Instructions -->
+        <div class="ps4-bottom-bar">
+            <div class="control-hints">
+                <span class="hint">
+                    <span class="button-icon x-button"></span>
+                    <span>Select</span>
+                </span>
+                <span class="hint">
+                    <span class="button-icon circle-button"></span>
+                    <span>Back</span>
+                </span>
+                <span class="hint">
+                    <span class="button-icon options-button"></span>
+                    <span>Options</span>
+                </span>
             </div>
         </div>
     </div>
